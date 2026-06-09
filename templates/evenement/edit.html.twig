@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Evenement
+{% endblock %}
+
+{% block body %}
+	<div class="p-6 w-full mx-auto">
+		<div class="mb-8">
+			<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Edit Evenement</h1>
+			<p class="text-sm text-slate-500 mt-1">modifiez les informations ci-dessous pour mettre à jour l'événement.</p>
+		</div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-4">
+		{{ include('evenement/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+		<a href="{{ path('admin_evenement_index') }}">back to list</a>
+
+		{{ include('evenement/_delete_form.html.twig') }}
+	</div>
+{% endblock %}

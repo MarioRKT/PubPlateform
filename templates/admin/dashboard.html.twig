@@ -1,0 +1,169 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+	<!-- ZONE DE CONTENU PRINCIPALE (Décalée vers la droite pour laisser la place à la Sidebar) -->
+	<main class="w-full p-8">
+		<!-- TOP NAV / HEADER -->
+		<header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+			<div>
+				<h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Gestion des Utilisateurs</h1>
+				<p class="text-sm text-slate-500 mt-1">Consultez, modifiez et gérez les droits des membres de la plateforme.</p>
+			</div>
+
+			<!-- Actions de l'en-tête -->
+			<div class="flex items-center gap-3">
+				<a href="{{ path('admin_user_new') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-blue-500/10 transition-all transform hover:-translate-y-0.5">
+					<i class="fa-solid fa-plus"></i>
+					Nouvel utilisateur
+				</a>
+			</div>
+		</header>
+
+		<!-- CARTES DE STATISTIQUES RAPIDES -->
+		<section
+			class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+			<!-- Stats 1 -->
+			<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+				<div>
+					<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Utilisateurs</span>
+					<h3 class="text-2xl font-bold text-slate-800 mt-1">{{ totalUsers }}</h3>
+				</div>
+				<div class="h-12 w-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+					<i class="fa-solid fa-user-group"></i>
+				</div>
+			</div>
+			<!-- Stats 2 -->
+			<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+				<div>
+					<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Administrateurs</span>
+					<h3 class="text-2xl font-bold text-slate-800 mt-1">{{ adminCount }}</h3>
+				</div>
+				<div class="h-12 w-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+					<i class="fa-solid fa-user-shield"></i>
+				</div>
+			</div>
+			<!-- Stats 3 -->
+			<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+				<div>
+					<span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Membres Actifs</span>
+					<h3 class="text-2xl font-bold text-slate-800 mt-1">98.4%</h3>
+				</div>
+				<div class="h-12 w-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+					<i class="fa-solid fa-circle-check"></i>
+				</div>
+			</div>
+		</section>
+
+		<section class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+			<div class="p-6 border-b border-slate-100 flex items-center justify-between flex-wrap gap-4">
+				<h3 class="font-bold text-slate-800 text-lg">Liste des utilisateurs</h3>
+				<div class="relative w-full max-w-xs">
+					<span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+						<i class="fa-solid fa-magnifying-glass text-sm"></i>
+					</span>
+					<input type="text" placeholder="Rechercher un membre..." class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white focus:border-blue-500 transition-all">
+				</div>
+			</div>
+
+			<div class="overflow-x-auto">
+				<table class="w-full text-left border-collapse">
+					<thead>
+						<tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+							<th class="py-4 px-6">Utilisateur</th>
+							<th class="py-4 px-6">Rôles</th>
+							<th class="py-4 px-6">Statut</th>
+							<th class="py-4 px-6">Dernière Connexion</th>
+							<th class="py-4 px-6 text-right">Actions</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 text-sm">
+						{% for user in users %}
+							<tr class="hover:bg-slate-50/50 transition-colors">
+								<td class="py-4 px-6">
+									<div
+										class="flex items-center gap-3">
+										{# Avatar avec initiales #}
+										<div class="h-10 w-10 rounded-full bg-blue-100 text-blue-700 font-semibold flex items-center justify-center text-sm">
+											{{ user.prenom|first|upper ~ user.nom|first|upper }}
+										</div>
+										<div>
+											<p class="font-semibold text-slate-800">{{ user.prenom }}
+												{{ user.nom }}</p>
+											<p class="text-xs text-slate-400">{{ user.email }}</p>
+										</div>
+									</div>
+								</td>
+								<td class="py-4 px-6">
+									{% for role in user.roles %}
+										{% if role == 'ROLE_ADMIN' %}
+											<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+												ROLE_ADMIN
+											</span>
+										{% elseif role == 'ROLE_CLIENT' %}
+											<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-50 text-slate-600 border border-slate-150">
+												ROLE_CLIENT
+											</span>
+										{% else %}
+											<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-gray-50 text-gray-600 border border-gray-150">
+												{{ role }}
+											</span>
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td
+									class="py-4 px-6">
+									{# Statut temporaire (tu pourras ajouter un champ isActive plus tard) #}
+									<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+										<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+										Actif
+									</span>
+								</td>
+								<td class="py-4 px-6 text-slate-500">
+									N/A
+								</td>
+								<td class="py-4 px-6 text-right">
+									<div
+										class="inline-flex items-center gap-2">
+										{# Modifier #}
+										<a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-slate-100 transition-colors" title="Modifier">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+										{# Supprimer (avec formulaire CSRF) #}
+										<form method="post" action="{{ path('admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Supprimer cet utilisateur ?');" style="display: inline;">
+											<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+											<button type="submit" class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Supprimer">
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="5" class="py-8 text-center text-slate-400">
+									<i class="fa-regular fa-folder-open text-3xl mb-2 block"></i>
+									Aucun utilisateur trouvé.
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Pagination / Footer -->
+			<div class="p-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 flex-wrap gap-2">
+				<p>Affichage de
+					<span class="font-semibold text-slate-700">{{ users|length }}</span>
+					utilisateurs</p>
+				{# Pagination (simple pour l'instant) #}
+				<div class="inline-flex items-center gap-1.5">
+					<button class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors disabled:opacity-50" disabled>Précédent</button>
+					<button class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">Suivant</button>
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

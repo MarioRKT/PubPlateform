@@ -1,0 +1,82 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+<div
+	class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+	{# Champ Titre #}
+	<div class="">
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Titre de l'événement</label>
+		{{ form_widget(form.titre, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Artiste #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Artiste / Organisateur</label>
+		{{ form_widget(form.artiste, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Catégorie #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Catégorie</label>
+		{{ form_widget(form.categorie, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900 bg-white'}}) }}
+	</div>
+
+	{# Date de l'événement #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Date de l'événement</label>
+		{{ form_widget(form.dateEvenement, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Heure de l'événement #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Heure de l'événement</label>
+		{{ form_widget(form.heureEvenement, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Lieu #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Lieu</label>
+		{{ form_widget(form.lieu, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Prix du billet #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Prix du billet (€)</label>
+		{{ form_widget(form.prixBillet, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Image #}
+	<div class="">
+		<label class="block text-sm font-semibold text-slate-700 mb-2">URL de l'image (ou fichier)</label>
+		{{ form_widget(form.image, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900'}}) }}
+	</div>
+
+	{# Checkbox Actif #}
+	<div class="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+		{{ form_widget(form.actif, {'attr': {'class': 'h-5 w-5 rounded text-blue-600 focus:ring-blue-500 border-slate-300 transition-all'}}) }}
+		<div>
+			<label class="block text-sm font-semibold text-slate-900">Événement actif</label>
+			<p class="text-xs text-slate-500">Cochez cette case pour rendre l'événement visible immédiatement sur le site.</p>
+		</div>
+	</div>
+
+	{# Description #}
+	<div class="md:col-span-3">
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Description</label>
+		{{ form_widget(form.description, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900 h-32'}}) }}
+	</div>
+
+
+</div>
+
+<div class="flex items-center justify-end gap-4 pt-4 border-t border-slate-100">
+	<a href="{{ path('admin_evenement_index') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 transition-colors">
+		<i class="fa-solid fa-arrow-left"></i>
+		<span>Retour à la liste</span>
+	</a>
+	<button class="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all">
+		{{ button_label|default('Enregistrer l\'événement') }}
+        </button>
+    </div>
+
+{{ form_end(form) }}

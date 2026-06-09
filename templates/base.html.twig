@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Panel d'administration
+			{% endblock %}
+		</title>
+
+		<!-- FontAwesome & Tailwind pour un rendu élégant global -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		{% block stylesheets %}
+			<link rel="stylesheet" href="/css/output.css">
+		{% endblock %}
+
+		{% block javascripts %}{% endblock %}
+
+	</head>
+	<body class="bg-slate-50 text-slate-800">
+		<div class="">
+			{% block sidebar %}
+				<!-- SIDEBAR GLOBALE -->
+				<aside class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between fixed inset-y-0 left-0 z-20 shadow-xl border-r border-slate-800">
+					<div>
+						<!-- Header de la Sidebar / Logo -->
+						<div class="h-20 flex items-center px-6 border-b border-slate-800">
+							<div class="flex items-center gap-3">
+								<div class="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
+									A
+								</div>
+								<div>
+									<h2 class="font-bold text-white tracking-wide text-sm">ADMIN PANEL</h2>
+									<span class="text-xs text-slate-500">Dashboard v1.0</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Menu de navigation -->
+						<nav class="p-4 space-y-1.5">
+							<p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Menu Principal</p>
+
+							{# Définition de la route actuelle pour éviter les répétitions #}
+							{% set current_route = app.request.attributes.get('_route') %}
+
+							<!-- Lien Dashboard -->
+							{# Remplacez 'admin_home' par le vrai nom de votre route dashboard si nécessaire #}
+							{% set is_dash_active = current_route == 'admin_home' %}
+								<a href="#" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
+									                    {{ is_dash_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}"> <i class="fa-solid fa-chart-pie text-lg transition-colors
+									                        {{ is_dash_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+								<span class="{{ is_dash_active ? 'font-semibold' : 'font-medium' }} text-sm">Dashboard</span>
+							</a>
+
+							<!-- Lien Utilisateurs -->
+							{% set is_users_active = current_route == 'admin_dashboard' %}
+							<a href="{{ path('admin_dashboard') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
+									                    {{ is_users_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+								<i class="fa-solid fa-users text-lg transition-colors
+									                        {{ is_users_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+								<span class="{{ is_users_active ? 'font-semibold' : 'font-medium' }} text-sm">Utilisateurs</span>
+							</a>
+
+							<!-- Lien Evenements -->
+							{% set is_events_active = current_route == 'admin_evenement_index' %}
+							<a href="{{ path('admin_evenement_index') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
+									                    {{ is_events_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+								<i class="fa-solid fa-calendar text-lg transition-colors
+									                        {{ is_events_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+								<span class="{{ is_events_active ? 'font-semibold' : 'font-medium' }} text-sm">Evenements</span>
+							</a>
+						</nav>
+					</div>
+
+					<!-- Déconnexion en bas -->
+					<div class="p-4 border-t border-slate-800">
+						<a href="{{ path('app_logout') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-all group">
+							<i class="fa-solid fa-arrow-right-from-bracket text-lg text-slate-500 group-hover:text-red-400 transition-colors"></i>
+							<span class="font-medium text-sm">Déconnexion</span>
+						</a>
+					</div>
+				</aside>
+			{% endblock %}
+
+			<div class="ml-64 h-screen"> {% block body %}{% endblock %}
+				</div>
+			</div>
+		</body>
+	</html>
