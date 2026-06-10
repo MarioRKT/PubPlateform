@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SiteConfig{% endblock %}
+
+{% block body %}
+    <h1>SiteConfig</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ site_config.id }}</td>
+            </tr>
+            <tr>
+                <th>TitrePage</th>
+                <td>{{ site_config.titrePage }}</td>
+            </tr>
+            <tr>
+                <th>Copyright</th>
+                <td>{{ site_config.copyright }}</td>
+            </tr>
+            <tr>
+                <th>LienSiteWeb</th>
+                <td>{{ site_config.lienSiteWeb }}</td>
+            </tr>
+            <tr>
+                <th>ActivationPaiement</th>
+                <td>{{ site_config.activationPaiement ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>NbrMaxMenu</th>
+                <td>{{ site_config.nbrMaxMenu }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ site_config.logo }}</td>
+            </tr>
+            <tr>
+                <th>Favicon</th>
+                <td>{{ site_config.favicon }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_site_config_index') }}">back to list</a>
+
+    <a href="{{ path('app_site_config_edit', {'id': site_config.id}) }}">edit</a>
+
+    {{ include('site_config/_delete_form.html.twig') }}
+{% endblock %}

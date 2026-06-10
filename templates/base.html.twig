@@ -48,27 +48,36 @@
 							{# Remplacez 'admin_home' par le vrai nom de votre route dashboard si nécessaire #}
 							{% set is_dash_active = current_route == 'admin_home' %}
 								<a href="#" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
-									                    {{ is_dash_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}"> <i class="fa-solid fa-chart-pie text-lg transition-colors
-									                        {{ is_dash_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+																		                    {{ is_dash_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}"> <i class="fa-solid fa-chart-pie text-lg transition-colors
+																		                        {{ is_dash_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
 								<span class="{{ is_dash_active ? 'font-semibold' : 'font-medium' }} text-sm">Dashboard</span>
 							</a>
 
 							<!-- Lien Utilisateurs -->
 							{% set is_users_active = current_route == 'admin_dashboard' %}
 							<a href="{{ path('admin_dashboard') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
-									                    {{ is_users_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+																		                    {{ is_users_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
 								<i class="fa-solid fa-users text-lg transition-colors
-									                        {{ is_users_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+																		                        {{ is_users_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
 								<span class="{{ is_users_active ? 'font-semibold' : 'font-medium' }} text-sm">Utilisateurs</span>
 							</a>
 
 							<!-- Lien Evenements -->
 							{% set is_events_active = current_route == 'admin_evenement_index' %}
 							<a href="{{ path('admin_evenement_index') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
-									                    {{ is_events_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+																		                    {{ is_events_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
 								<i class="fa-solid fa-calendar text-lg transition-colors
-									                        {{ is_events_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+																		                        {{ is_events_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
 								<span class="{{ is_events_active ? 'font-semibold' : 'font-medium' }} text-sm">Evenements</span>
+							</a>
+
+							<!-- Lien Evenements -->
+							{% set is_config_active = current_route == 'admin_configuration_index' %}
+							<a href="{{ path('admin_configuration_index') }}" class="flex items-center gap-3.5 px-3 py-3 rounded-xl transition-all group
+									    {{ is_config_active ? 'text-white bg-blue-600/10 border-l-4 border-blue-500 shadow-inner' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+								<i class="fa-solid fa-sliders text-lg transition-colors
+									        {{ is_config_active ? 'text-blue-500' : 'text-slate-500 group-hover:text-blue-500' }}"></i>
+								<span class="{{ is_config_active ? 'font-semibold' : 'font-medium' }} text-sm">Configuration</span>
 							</a>
 						</nav>
 					</div>

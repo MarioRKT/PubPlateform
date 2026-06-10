@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SiteConfig{% endblock %}
+
+{% block body %}
+    <h1>Create new SiteConfig</h1>
+
+    {{ include('site_config/_form.html.twig') }}
+
+    <a href="{{ path('app_site_config_index') }}">back to list</a>
+{% endblock %}

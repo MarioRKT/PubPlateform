@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Menu | Admin
+{% endblock %}
+
+{% block body %}
+	<div
+		class="p-6 w-full mx-auto">
+		<!-- En-tête avec titre et bouton de retour -->
+		<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+			<div>
+				<div class="flex items-center gap-3">
+					<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Détails du Menu</h1>
+					<span class="text-xs font-mono bg-slate-100 text-slate-600 px-2 py-1 rounded-md">#{{ menu.id }}</span>
+				</div>
+				<p class="text-sm text-slate-500 mt-1">Consultez la configuration de cet élément de navigation.</p>
+			</div>
+			<a href="{{ path('admin_configuration_index') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 transition-colors">
+				<i class="fa-solid fa-arrow-left"></i>
+				<span>Retour à la liste</span>
+			</a>
+		</div>
+
+		<!-- Carte principale contenant les détails -->
+		<div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+			<div
+				class="divide-y divide-slate-100">
+
+				<!-- Ligne : Nom -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+					<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Nom</div>
+					<div class="sm:col-span-2 text-sm font-bold text-slate-800">{{ menu.nom }}</div>
+				</div>
+
+				<!-- Ligne : Status -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+					<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Statut</div>
+					<div class="sm:col-span-2">
+						{% if menu.status %}
+							<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+								<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+								Actif
+							</span>
+						{% else %}
+							<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+								<span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+								Inactif
+							</span>
+						{% endif %}
+					</div>
+				</div>
+
+				<!-- Ligne : Type de Lien -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+					<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Type de lien</div>
+					<div class="sm:col-span-2">
+						<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-gray-50 text-gray-600 border border-gray-150">
+							{{ menu.typeLien }}
+						</span>
+					</div>
+				</div>
+
+				<!-- Ligne : Ordre -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+					<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Ordre d'affichage</div>
+					<div class="sm:col-span-2 text-sm font-mono font-medium text-slate-700">{{ menu.ordre }}</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Barre d'actions inférieure -->
+		<div class="flex items-center justify-end gap-4 pt-6 mt-6 border-t border-slate-100">
+			<div
+				class="inline-flex items-center gap-3">
+				{# Formulaire de suppression intégré à gauche des actions d'édition #}
+				{{ include('admin/menu/_delete_form.html.twig') }}
+
+				{# Bouton Modifier #}
+				<a href="{{ path('admin_menu_edit', {'id': menu.id}) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-5 rounded-xl shadow-md shadow-blue-500/10 transition-all transform hover:-translate-y-0.5">
+					<i class="fa-solid fa-pen-to-square"></i>
+					Modifier le menu
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

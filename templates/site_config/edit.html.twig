@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Configuration du site
+{% endblock %}
+
+{% block body %}
+	<div class="config">
+		<div class="p-6 max-w-3xl mx-auto">
+			<h1 class="text-2xl font-bold mb-4">Configuration du site</h1>
+
+			{{ form_start(form) }}
+			{{ form_row(form.titrePage) }}
+			{{ form_row(form.copyright) }}
+			{{ form_row(form.lienSiteWeb) }}
+			{{ form_row(form.activationPaiement) }}
+			{{ form_row(form.nbrMaxMenu) }}
+
+			<div class="row mb-3">
+				<div class="col">
+					{% if site_config.logo %}
+						<img src="{{ asset('uploads/site/' ~ site_config.logo) }}" alt="Logo" style="max-height: 80px;">
+					{% endif %}
+					{{ form_row(form.logoFile) }}
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col">
+					{% if site_config.favicon %}
+						<img src="{{ asset('uploads/site/' ~ site_config.favicon) }}" alt="Favicon" style="max-height: 32px;">
+					{% endif %}
+					{{ form_row(form.faviconFile) }}
+				</div>
+			</div>
+
+			<button class="btn btn-primary">Enregistrer</button>
+			{{ form_end(form) }}
+
+			<a href="{{ path('admin_dashboard') }}">Retour au tableau de bord</a>
+		</div>
+	</div>
+{% endblock %}

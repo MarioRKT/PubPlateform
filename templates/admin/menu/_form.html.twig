@@ -1,0 +1,46 @@
+{{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+
+<div
+	class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+	{# Champ Nom #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Nom du menu</label>
+		{{ form_widget(form.nom, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900', 'placeholder': 'Ex: Accueil, Contact...'}}) }}
+	</div>
+
+	{# Champ Type Lien #}
+	<div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Type de lien</label>
+		{{ form_widget(form.typeLien, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900 bg-white'}}) }}
+	</div>
+
+	{# Champ Ordre #}
+	{# <div>
+		<label class="block text-sm font-semibold text-slate-700 mb-2">Ordre d'affichage</label>
+		{{ form_widget(form.ordre, {'attr': {'class': 'w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition-all text-slate-900', 'placeholder': 'Ex: 1, 2, 3...'}}) }}
+	</div> #}
+
+	{# Checkbox Status (Actif/Inactif) #}
+	<div class="flex items-center gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+		{{ form_widget(form.status, {'attr': {'class': 'h-5 w-5 rounded text-blue-600 focus:ring-blue-500 border-slate-300 transition-all'}}) }}
+		<div>
+			<label class="block text-sm font-semibold text-slate-900">Menu actif</label>
+			<p class="text-xs text-slate-500">Cochez cette case pour rendre ce lien visible dans la navigation.</p>
+		</div>
+	</div>
+
+</div>
+
+{# Zone des boutons d'action #}
+<div class="flex items-center justify-end gap-4 pt-4 border-t border-slate-100 mt-6">
+	<a href="{{ path('admin_configuration_index') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 transition-colors">
+		<i class="fa-solid fa-arrow-left"></i>
+		<span>Retour à la liste</span>
+	</a>
+	<button type="submit" class="px-6 py-2.5 rounded-xl text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 hover:shadow-blue-500/30 transition-all">
+		{{ button_label|default('Enregistrer le menu') }}
+	</button>
+</div>
+
+{{ form_end(form) }}
