@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Catégorie | Admin{% endblock %}
+
+{% block body %}
+<div class="p-8 w-full mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div>
+            <div class="flex items-center gap-3">
+                <h1 class="text-xl font-bold text-slate-800 tracking-tight uppercase">Détails de la Catégorie</h1>
+                <span class="text-xs font-mono bg-slate-100 text-slate-600 px-2 py-1 rounded-md">#{{ categorie.id }}</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">Consultez la configuration et la photo de fond de cette catégorie.</p>
+        </div>
+        <a href="{{ path('admin_categorie_index') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 transition-colors">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Retour à la liste</span>
+        </a>
+    </div>
+
+    {# Rangée supérieure : Strictement 2 colonnes comme sur le formulaire New/Edit #}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {# --- BLOC GAUCHE : INFORMATIONS & ENCART STATUS --- #}
+        <div class="space-y-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden divide-y divide-slate-100">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5">
+                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Nom de la catégorie</div>
+                    <div class="sm:col-span-2 text-sm font-bold text-slate-800">{{ categorie.nom }}</div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5">
+                    <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ordre de tri</div>
+                    <div class="sm:col-span-2">
+                        <span class="text-sm font-mono font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-150">
+                            {{ categorie.tri }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {# Statut Actif #}
+                <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                    <span class="text-sm font-medium text-slate-500">Statut de visibilité</span>
+                    {% if categorie.status %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Actif
+                        </span>
+                    {% else %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+                            <span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+                            Inactif
+                        </span>
+                    {% endif %}
+                </div>
+
+                {# Mise en avant #}
+                <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                    <span class="text-sm font-medium text-slate-500">Mise en avant</span>
+                    {% if categorie.miseEnAvant %}
+                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-[#F96C2F]/10 text-[#F96C2F] border border-[#F96C2F]/20">
+                            <i class="fa-solid fa-star text-[10px]"></i> À la une
+                        </span>
+                    {% else %}
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-400 border border-gray-200">
+                            Standard
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# --- BLOC DROIT : PHOTO DE FOND UNIQUE --- #}
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col justify-between">
+            <div>
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Photo de fond</h3>
+                {% if categorie.photoFond %}
+                    <div class="rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-inner group relative">
+                        <img src="{{ asset('uploads/categories/' ~ categorie.photoFond) }}" alt="{{ categorie.nom }}" class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <p class="text-[11px] text-slate-400 font-mono mt-2 truncate" title="{{ categorie.photoFond }}">
+                        <i class="fa-solid fa-paperclip mr-1"></i> {{ categorie.photoFond }}
+                    </p>
+                {% else %}
+                    <div class="rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center text-slate-400 flex flex-col items-center justify-center gap-2 h-32">
+                        <i class="fa-regular fa-image text-3xl text-slate-300"></i>
+                        <span class="text-xs">Aucune photo de fond</span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    {# --- BLOC INFÉRIEUR : DESCRIPTION (Prend toute la largeur) --- #}
+    <div class="w-full bg-white rounded-2xl shadow-sm border border-slate-100 p-5 mt-6">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Description de la catégorie</h3>
+        <div class="text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+            {{ categorie.description ? categorie.description : 'Aucune description fournie pour cette catégorie.' }}
+        </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-4 pt-6 mt-6 border-t border-slate-100">
+        <div class="inline-flex items-center gap-3">
+            {# Formulaire de suppression injecté à gauche #}
+            {{ include('admin/categorie/_delete_form.html.twig') }}
+
+            {# Bouton Modifier #}
+            <a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-5 rounded-xl shadow-md shadow-blue-500/10 transition-all transform hover:-translate-y-0.5">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Modifier la catégorie
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

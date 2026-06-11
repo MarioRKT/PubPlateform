@@ -1,0 +1,39 @@
+{% set config = site_config() %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}
+				{{ config.titrePage|default('Mon site') }}
+			{% endblock %}
+		</title>
+
+		{% if config and config.favicon %}
+			<link rel="icon" href="{{ asset('uploads/site/' ~ config.favicon) }}">
+		{% endif %}
+		<!-- FontAwesome & Tailwind pour un rendu élégant global -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		{% block stylesheets %}
+			<link rel="stylesheet" href="/css/output.css">
+		{% endblock %}
+	</head>
+	<body>
+		<header>
+			{% if config and config.logo %}
+				<img src="{{ asset('uploads/site/' ~ config.logo) }}" alt="Logo">
+			{% endif %}
+			<!-- votre navbar -->
+		</header>
+
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+
+		<footer>
+			<p>{{ config.copyright|default('© Mon site') }}</p>
+		</footer>
+	</body>
+</html>

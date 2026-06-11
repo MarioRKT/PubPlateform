@@ -1,0 +1,14 @@
+<form method="post"
+      action="{{ path('admin_type_salle_delete', {'id': type_salle.id}) }}"
+      onsubmit="return confirm('Supprimer ce type de salle ?');">
+
+    <input type="hidden"
+           name="_token"
+           value="{{ csrf_token('delete' ~ type_salle.id) }}">
+
+    <button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors">
+        <i class="fa-solid fa-trash"></i>
+        Supprimer
+    </button>
+
+</form>

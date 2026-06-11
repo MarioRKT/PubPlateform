@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Détails de la Salle | Admin
+{% endblock %}
+
+{% block body %}
+	<div class="p-6 w-full mx-auto">
+		<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+			<div>
+				<div class="flex items-center gap-3">
+					<h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Détails de la Salle</h1>
+					<span class="text-xs font-mono bg-slate-100 text-slate-600 px-2 py-1 rounded-md">#{{ salle.id }}</span>
+				</div>
+				<p class="text-sm text-slate-500 mt-1">Consultez la configuration et les spécificités de cette salle.</p>
+			</div>
+			<a href="{{ path('admin_salle_index') }}" class="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800 transition-colors">
+				<i class="fa-solid fa-arrow-left"></i>
+				<span>Retour à la liste</span>
+			</a>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+			<div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+				<div class="divide-y divide-slate-100">
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+						<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Nom de la salle</div>
+						<div class="sm:col-span-2 text-sm font-bold text-slate-800">{{ salle.nom }}</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+						<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Lieu / Emplacement</div>
+						<div class="sm:col-span-2 text-sm font-medium text-slate-700">{{ salle.lieu }}</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+						<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Capacité d'accueil</div>
+						<div class="sm:col-span-2">
+							<span class="text-slate-800 font-semibold bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md text-xs font-mono">
+								{{ salle.limitePlace }}
+								places maximum
+							</span>
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 p-5 hover:bg-slate-50/50 transition-colors">
+						<div class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Description</div>
+						<div class="sm:col-span-2 text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+							{{ salle.description ? salle.description : 'Aucune description fournie pour le moment.' }}
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="space-y-6">
+				<div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5 space-y-4">
+					<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Visibilité & Paramètres</h3>
+
+					<div class="flex items-center justify-between border-b border-slate-50 pb-3">
+						<span class="text-sm font-medium text-slate-500">Statut de la salle</span>
+						{% if salle.status %}
+							<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+								<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+								Actif
+							</span>
+						{% else %}
+							<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+								<span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+								Inactif
+							</span>
+						{% endif %}
+					</div>
+
+					<div class="flex items-center justify-between border-b border-slate-50 pb-3">
+						<span class="text-sm font-medium text-slate-500">Mise en avant</span>
+						{% if salle.miseEnAvant %}
+							<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-[#F96C2F]/10 text-[#F96C2F] border border-[#F96C2F]/20">
+								<i class="fa-solid fa-star text-[10px]"></i>
+								À la une
+							</span>
+						{% else %}
+							<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-400 border border-gray-200">
+								Standard
+							</span>
+						{% endif %}
+					</div>
+
+					<div class="flex items-center justify-between pt-1">
+						<span class="text-sm font-medium text-slate-500">Position de tri</span>
+						<span class="text-sm font-mono font-bold text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-150">
+							{{ salle.tri }}
+						</span>
+					</div>
+				</div>
+
+				<div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-5">
+					<h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Image d'aperçu</h3>
+					{% if salle.apercu %}
+						<div class="rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-inner group relative">
+							<img src="{{ asset('uploads/salles/' ~ salle.apercu) }}" alt="{{ salle.nom }}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+						</div>
+						<p class="text-[11px] text-slate-400 font-mono mt-2 truncate" title="{{ salle.apercu }}">
+							<i class="fa-solid fa-paperclip mr-1"></i>
+							{{ salle.apercu }}</p>
+					{% else %}
+						<div class="rounded-xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center text-slate-400 flex flex-col items-center justify-center gap-2">
+							<i class="fa-regular fa-image text-3xl text-slate-300"></i>
+							<span class="text-xs">Aucun aperçu photo</span>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="flex items-center justify-end gap-4 pt-6 mt-6 border-t border-slate-100">
+			<div
+				class="inline-flex items-center gap-3">
+				{# Formulaire de suppression injecté à gauche #}
+				{{ include('admin/salle/_delete_form.html.twig') }}
+
+				{# Bouton Modifier #}
+				<a href="{{ path('admin_salle_edit', {'id': salle.id}) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-5 rounded-xl shadow-md shadow-blue-500/10 transition-all transform hover:-translate-y-0.5">
+					<i class="fa-solid fa-pen-to-square"></i>
+					Modifier la salle
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

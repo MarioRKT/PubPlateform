@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Salle{% endblock %}
+
+{% block body %}
+<div class="p-8">
+    <h1 class="text-xl font-bold text-slate-800 tracking-tight uppercase mb-6">Modifier les paramètres de la salle</h1>
+
+    {{ include('admin/salle/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="p-8">
+{% endblock %}

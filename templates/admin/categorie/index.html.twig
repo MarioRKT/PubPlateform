@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Catégories | Admin
+{% endblock %}
+
+{% block body %}
+	<div class="p-8">
+		<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+			<div>
+				<h1 class="text-xl font-bold text-slate-800 tracking-tight uppercase">Liste des Catégories</h1>
+				<p class="text-sm text-slate-500 mt-1">Consultez, organisez et mettez en avant les catégories d'événements.</p>
+			</div>
+			<a href="{{ path('admin_categorie_new') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-blue-500/10 transition-all transform hover:-translate-y-0.5">
+				<i class="fa-solid fa-plus"></i>
+				Créer une catégorie
+			</a>
+		</div>
+
+		<div class="overflow-x-auto bg-white rounded-2xl border border-slate-100 shadow-sm">
+			<table class="w-full text-left border-collapse">
+				<thead>
+					<tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+						<th class="py-4 px-6 w-24">ID</th>
+						<th class="py-4 px-6">Image</th>
+						<th class="py-4 px-6">Nom de la catégorie</th>
+						<th class="py-4 px-6">Statut</th>
+						<th class="py-4 px-6">Ordre</th>
+						<th class="py-4 px-6">Mise en avant</th>
+						<th class="py-4 px-6">Description</th>
+						<th class="py-4 px-6 text-right w-36">Actions</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-slate-100 text-sm">
+					{% for categorie in categories %}
+						<tr class="hover:bg-slate-50/50 transition-colors">
+
+							<td class="py-4 px-6 text-slate-400 font-mono text-xs">
+								#{{ categorie.id }}
+							</td>
+
+							<td class="py-4 px-6">
+								{% if categorie.photoFond %}
+									<div class="h-10 w-16 rounded-lg overflow-hidden bg-slate-100 border border-slate-200/60 shadow-sm">
+										<img src="{{ asset('uploads/categories/' ~ categorie.photoFond) }}" alt="{{ categorie.nom }}" class="w-full h-full object-cover">
+									</div>
+								{% else %}
+									<div class="h-10 w-16 rounded-lg bg-slate-50 border border-dashed border-slate-200 flex items-center justify-center text-slate-300" title="Aucune image">
+										<i class="fa-regular fa-image text-sm"></i>
+									</div>
+								{% endif %}
+							</td>
+
+							<td class="py-4 px-6 font-semibold text-slate-800">
+								{{ categorie.nom }}
+							</td>
+
+							<td class="py-4 px-6">
+								{% if categorie.status %}
+									<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+										<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+										Actif
+									</span>
+								{% else %}
+									<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+										<span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+										Inactif
+									</span>
+								{% endif %}
+							</td>
+
+							<td class="py-4 px-6 text-slate-500 font-mono text-xs">
+								{{ categorie.tri }}
+							</td>
+
+							<td class="py-4 px-6">
+								{% if categorie.miseEnAvant %}
+									<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-[#F96C2F]/10 text-[#F96C2F] border border-[#F96C2F]/20">
+										<i class="fa-solid fa-star text-[10px]"></i>
+										À la une
+									</span>
+								{% else %}
+									<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-400 border border-gray-200">
+										Standard
+									</span>
+								{% endif %}
+							</td>
+
+							<td class="py-4 px-6 text-slate-400 max-w-xs truncate" title="{{ categorie.description }}">
+								{{ categorie.description ? categorie.description : 'Pas de description' }}
+							</td>
+
+							<td class="py-4 px-6 text-right">
+								<div
+									class="inline-flex items-center gap-2">
+									{# Voir #}
+									<a href="{{ path('admin_categorie_show', {'id': categorie.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Voir">
+										<i class="fa-solid fa-eye"></i>
+									</a>
+									{# Modifier #}
+									<a href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Modifier">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="8" class="py-12 text-center text-slate-400">
+								<i class="fa-regular fa-folder-open text-4xl mb-3 block text-slate-300"></i>
+								Aucune catégorie trouvée dans la base de données.
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

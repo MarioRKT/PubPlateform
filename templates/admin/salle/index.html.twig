@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Salles | Admin
+{% endblock %}
+
+{% block body %}
+	<div
+		class="p-8 space-y-16">
+
+		{# ==================== SECTION 1 : TYPES DE SALLE ==================== #}
+		<section>
+			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+				<div>
+					<h1 class="text-xl font-bold text-slate-800 tracking-tight uppercase">Types de Salle</h1>
+					<p class="text-sm text-slate-500 mt-1">Gérez et organisez les catégories de salles de la plateforme.</p>
+				</div>
+				<a href="{{ path('admin_type_salle_new') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-blue-500/10 transition-all transform hover:-translate-y-0.5 self-start sm:self-auto">
+					<i class="fa-solid fa-plus"></i>
+					Nouveau type
+				</a>
+			</div>
+
+			<div class="overflow-x-auto bg-white rounded-2xl border border-slate-100 shadow-sm">
+				<table class="w-full text-left border-collapse">
+					<thead>
+						<tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+							<th class="py-4 px-6 w-24">ID</th>
+							<th class="py-4 px-6">Type de salle</th>
+							<th class="py-4 px-6 text-right w-32">Actions</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 text-sm">
+						{% for type_salle in types_salle %}
+							<tr class="hover:bg-slate-50/50 transition-colors">
+								<td class="py-4 px-6 text-slate-400 font-mono text-xs">
+									#{{ type_salle.id }}
+								</td>
+
+								<td class="py-4 px-6 font-semibold text-slate-800">
+									{{ type_salle.nom }}
+								</td>
+
+								<td class="py-4 px-6 text-right">
+									<div
+										class="inline-flex items-center gap-2">
+										{# Voir #}
+										<a href="{{ path('admin_type_salle_show', {'id': type_salle.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Voir">
+											<i class="fa-solid fa-eye"></i>
+										</a>
+										{# Modifier #}
+										<a href="{{ path('admin_type_salle_edit', {'id': type_salle.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Modifier">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+									</div>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="3" class="py-12 text-center text-slate-400">
+									<i class="fa-regular fa-folder-open text-4xl mb-3 block text-slate-300"></i>
+									Aucun type de salle trouvé.
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<hr
+		class="border-slate-100">
+
+		{# ==================== SECTION 2 : LISTE DES SALLES ==================== #}
+		<section>
+			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+				<div>
+					<h1 class="text-xl font-bold text-slate-800 tracking-tight uppercase">Liste des Salles</h1>
+					<p class="text-sm text-slate-500 mt-1">Consultez, modifiez et gérez les configurations des salles de la plateforme.</p>
+				</div>
+				<a href="{{ path('admin_salle_new') }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm py-2.5 px-4 rounded-xl shadow-lg shadow-blue-500/10 transition-all transform hover:-translate-y-0.5 self-start sm:self-auto">
+					<i class="fa-solid fa-plus"></i>
+					Créer une nouvelle salle
+				</a>
+			</div>
+
+			<div class="overflow-x-auto bg-white rounded-2xl border border-slate-100 shadow-sm">
+				<table class="w-full text-left border-collapse">
+					<thead>
+						<tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+							<th class="py-4 px-6">Id</th>
+							<th class="py-4 px-6">Nom de la salle</th>
+							<th class="py-4 px-6">Lieu / Emplacement</th>
+							<th class="py-4 px-6">Capacité</th>
+							<th class="py-4 px-6">Statut</th>
+							<th class="py-4 px-6">Type de salle</th>
+							<th class="py-4 px-6">Description</th>
+							<th class="py-4 px-6">Tri</th>
+							<th class="py-4 px-6">Mise en avant</th>
+							<th class="py-4 px-6 text-right">Actions</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 text-sm">
+						{% for salle in salles %}
+							<tr class="hover:bg-slate-50/50 transition-colors">
+								<td class="py-4 px-6 text-slate-400 font-mono text-xs">
+									#{{ salle.id }}
+								</td>
+
+								<td class="py-4 px-6 font-semibold text-slate-800">
+									{{ salle.nom }}
+								</td>
+
+								<td class="py-4 px-6 text-slate-600 font-medium">
+									{{ salle.lieu }}
+								</td>
+
+								<td class="py-4 px-6">
+									<span class="text-slate-800 font-semibold bg-slate-50 border border-slate-150 px-2 py-1 rounded-md text-xs font-mono">
+										{{ salle.limitePlace }}
+										places
+									</span>
+								</td>
+
+								<td class="py-4 px-6">
+									{% if salle.status %}
+										<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+											<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+											Actif
+										</span>
+									{% else %}
+										<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+											<span class="h-1.5 w-1.5 rounded-full bg-rose-400"></span>
+											Inactif
+										</span>
+									{% endif %}
+								</td>
+
+								<td class="py-4 px-6">
+									<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-gray-50 text-gray-600 border border-gray-150">
+										{{ salle.typeSalle.nom }}
+									</span>
+								</td>
+
+								<td class="py-4 px-6 text-slate-400 max-w-xs truncate" title="{{ salle.description }}">
+									{{ salle.description ? salle.description : 'Pas de description' }}
+								</td>
+
+								<td class="py-4 px-6 text-slate-500 font-mono text-xs">
+									{{ salle.tri }}
+								</td>
+
+								<td class="py-4 px-6">
+									{% if salle.miseEnAvant %}
+										<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-semibold bg-[#F96C2F]/10 text-[#F96C2F] border border-[#F96C2F]/20">
+											<i class="fa-solid fa-star text-[10px]"></i>
+											À la une
+										</span>
+									{% else %}
+										<span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-400 border border-gray-200">
+											Standard
+										</span>
+									{% endif %}
+								</td>
+
+								<td class="py-4 px-6 text-right">
+									<div
+										class="inline-flex items-center gap-2">
+										{# Voir #}
+										<a href="{{ path('admin_salle_show', {'id': salle.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Voir">
+											<i class="fa-solid fa-eye"></i>
+										</a>
+										{# Modifier #}
+										<a href="{{ path('admin_salle_edit', {'id': salle.id}) }}" class="p-1.5 rounded-lg text-slate-400 hover:text-[#F96C2F] hover:bg-[#F96C2F]/10 transition-colors" title="Modifier">
+											<i class="fa-solid fa-pen-to-square"></i>
+										</a>
+									</div>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="10" class="py-12 text-center text-slate-400">
+									<i class="fa-regular fa-folder-open text-4xl mb-3 block text-slate-300"></i>
+									Aucune salle trouvée dans la base de données.
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+	</div>
+{% endblock %}

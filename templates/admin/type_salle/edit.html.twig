@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Type de Salle
+{% endblock %}
+
+{% block body %}
+
+	<div class="max-w-4xl mx-auto px-6 py-8">
+
+		<div class="mb-6">
+			<h1 class="text-2xl font-bold text-slate-800">
+				Modifier le Type de Salle
+			</h1>
+			<p class="text-sm text-slate-500 mt-1">
+				Mettez à jour les informations du type de salle.
+			</p>
+		</div>
+
+		<div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+
+			{{ include('admin/type_salle/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+			<a href="{{ path('admin_salle_index') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">
+				<i class="fa-solid fa-arrow-left"></i>
+				Retour à la liste
+			</a>
+		</div>
+
+		<div class="mt-6 flex items-center gap-3">
+
+
+
+		</div>
+
+	</div>
+{% endblock %}
